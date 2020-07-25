@@ -1,0 +1,59 @@
+[{
+    "name":"Inka restaurant",
+    "id":1,
+    "availableDays":"All days",
+    "image":"receipe.png",
+    "openTime":"9:00 AM - 6:00 PM",
+    "phoneNumber":9578508801,
+    "ratings":5.0,
+    "reviews":354,
+    "menus":[{
+        "id":1,
+        "name":"Starter",
+        "menuItems":[{
+            "id":1,
+            "name":"Guac de la Costa",
+            "desc":null,
+            "price":8
+        },{
+            "id":2,
+            "name":"Chicharron y Cerveza",
+            "desc":"citron vert / Corona sauce",
+            "price":9
+        },{
+            "id":3,
+            "name":"Chilitos con Cerveza",
+            "desc":"padrones tempura gambas",
+            "price":7
+        }]
+    }]
+},{
+    "name":"Gardren restaurant",
+    "id":1,
+    "availableDays":"All days",
+    "image":"receipe.png",
+    "openTime":"9:00 AM - 6:00 PM",
+    "phoneNumber":9578508801,
+    "ratings":5.0,
+    "reviews":4,
+    "menus":[{
+        "id":1,
+        "name":"Starter",
+        "menuItems":[{
+            "id":1,
+            "name":"Guac de la Costa",
+            "desc":"tortillas de mais, fruit de la passion, mango",
+            "price":8
+        },{
+            "id":2,
+            "name":"Chicharron y Cerveza",
+            "desc":"citron vert / Corona sauce",
+            "price":9
+        },{
+            "id":3,
+            "name":"Chilitos con Cerveza",
+            "desc":"padrones tempura gambas",
+            "price":7
+        }]
+    }]
+}]

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Cart" representedClassName="Cart" syncable="YES">
+        <attribute name="deliveryOption" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="cartMenuItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CartMenuItem" inverseName="cart" inverseEntity="CartMenuItem"/>
+        <relationship name="restaurant" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Restaurant" inverseName="cart" inverseEntity="Restaurant"/>
+    </entity>
+    <entity name="CartMenuItem" representedClassName="CartMenuItem" syncable="YES">
+        <attribute name="comments" optional="YES" attributeType="String"/>
+        <attribute name="quantity" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="cart" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Cart" inverseName="cartMenuItems" inverseEntity="Cart"/>
+        <relationship name="menuItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MenuItem" inverseName="cartMenuItem" inverseEntity="MenuItem"/>
+    </entity>
+    <entity name="Menu" representedClassName="Menu" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="menuItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MenuItem" inverseName="menu" inverseEntity="MenuItem"/>
+        <relationship name="restaurant" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Restaurant" inverseName="menus" inverseEntity="Restaurant"/>
+    </entity>
+    <entity name="MenuItem" representedClassName="MenuItem" syncable="YES">
+        <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="price" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="cartMenuItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CartMenuItem" inverseName="menuItem" inverseEntity="CartMenuItem"/>
+        <relationship name="menu" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Menu" inverseName="menuItems" inverseEntity="Menu"/>
+    </entity>
+    <entity name="Restaurant" representedClassName="Restaurant" syncable="YES">
+        <attribute name="availableDays" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="openTime" optional="YES" attributeType="String"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="ratings" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="reviews" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="cart" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Cart" inverseName="restaurant" inverseEntity="Cart"/>
+        <relationship name="menus" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Menu" inverseName="restaurant" inverseEntity="Menu"/>
+    </entity>
+    <elements>
+        <element name="Cart" positionX="310.35546875" positionY="-145.546875" width="128" height="103"/>
+        <element name="CartMenuItem" positionX="307.203125" positionY="18.61328125" width="128" height="103"/>
+        <element name="Menu" positionX="-98.078125" positionY="-157.40234375" width="128" height="103"/>
+        <element name="MenuItem" positionX="97.1640625" positionY="-157.7578125" width="128" height="133"/>
+        <element name="Restaurant" positionX="-270.45703125" positionY="-129.1640625" width="128" height="193"/>
+    </elements>
+</model>
