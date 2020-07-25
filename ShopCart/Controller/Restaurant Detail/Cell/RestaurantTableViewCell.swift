@@ -97,6 +97,10 @@ class RestaurantTableViewCell: UITableViewCell {
         
         if let cartMenuitem =  self.menuItem.cartMenuItem{
         
+            guard cartMenuitem.quantity < 20 else {
+                return
+            }
+            
             cartMenuitem.quantity += 1
         
         } else {

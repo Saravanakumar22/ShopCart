@@ -40,6 +40,10 @@ class CartItemTableViewCell: RestaurantTableViewCell {
     
     @objc override func addItem(sender: UIButton) {
         
+        guard cartMenuItem.quantity < 20 else {
+            return
+        }
+        
         let context = AppDelegate.shared.managedObjectContext
         
         cartMenuItem.quantity += 1
