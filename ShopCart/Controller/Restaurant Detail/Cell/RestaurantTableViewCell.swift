@@ -69,7 +69,7 @@ class RestaurantTableViewCell: UITableViewCell {
         delegate.didUpdateSelectIem()
     }
     
-    fileprivate func updateDescLabel(withDesc desc:String?) {
+    func updateDescLabel(withDesc desc:String?) {
         
         if desc != nil && desc!.isEmpty == false {
             itemDesc.isHidden = false

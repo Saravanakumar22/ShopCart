@@ -56,7 +56,7 @@ class CartItemTableViewCell: RestaurantTableViewCell {
             AppDelegate.shared.saveContext()
         }
         
-        delegate.updateCartView()
+        delegate.didUpdateSelectIem()
     }
     
     @objc override func minusItem(sender: UIButton) {
@@ -75,7 +75,7 @@ class CartItemTableViewCell: RestaurantTableViewCell {
             AppDelegate.shared.saveContext()
         }
         
-        delegate.updateCartView()
+        delegate.didUpdateSelectIem()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
