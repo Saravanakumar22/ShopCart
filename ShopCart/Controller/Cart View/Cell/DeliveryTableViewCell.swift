@@ -9,7 +9,7 @@
 import UIKit
 
 protocol DeliveryCellDelegate {
-    func updateDeliveryOption(option:String)
+    func didSelectDeliveryOption(option:String)
 }
 
 class DeliveryTableViewCell: UITableViewCell {
@@ -46,7 +46,7 @@ class DeliveryTableViewCell: UITableViewCell {
         takeawayView.addGestureRecognizer(takeawayTap)
     }
     
-    func updateDeliveryOption(isDineIn:Bool) {
+    fileprivate func updateDeliveryOption(isDineIn:Bool) {
                 
         if isDineIn {
             dineInIcon.setIcon("\u{f192}", title: nil, fontSize: 19, textColor: .orange)
@@ -58,16 +58,16 @@ class DeliveryTableViewCell: UITableViewCell {
         
     }
     
-    @objc func dineInGesture(gesture: UITapGestureRecognizer) {
+    @objc fileprivate func dineInGesture(gesture: UITapGestureRecognizer) {
         self.updateDeliveryOption(isDineIn: true)
         
-        delegate.updateDeliveryOption(option: "Dine-In")
+        delegate.didSelectDeliveryOption(option: "Dine-In")
     }
     
-    @objc func takewayGesture(gesture: UITapGestureRecognizer) {
+    @objc fileprivate func takewayGesture(gesture: UITapGestureRecognizer) {
         self.updateDeliveryOption(isDineIn: false)
         
-        delegate.updateDeliveryOption(option: "Take way")
+        delegate.didSelectDeliveryOption(option: "Take way")
     }
     
 

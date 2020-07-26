@@ -19,12 +19,16 @@ class RestaurantDetailViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet weak var reviewAndTimeHeight: NSLayoutConstraint!
     @IBOutlet weak var restaurantViewHeight: NSLayoutConstraint!
     @IBOutlet weak var viewCartHeight: NSLayoutConstraint!
+    @IBOutlet weak var headerImageViewHeight: NSLayoutConstraint!
     @IBOutlet weak var navBar: UIView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var infoButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
-
+    @IBOutlet weak var headerImageView: UIImageView!
+    @IBOutlet weak var customHeaderView: UIView!
+    @IBOutlet weak var restaurantNameHeight: NSLayoutConstraint!
+    
     var restaurant: Restaurant!
     var menus: [Menu]!
     
@@ -33,6 +37,7 @@ class RestaurantDetailViewController: UIViewController, UITableViewDelegate, UIT
 
         self.setupUI()
         self.updateRestaurantDetail()
+        self.view.layoutIfNeeded()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,13 +47,13 @@ class RestaurantDetailViewController: UIViewController, UITableViewDelegate, UIT
     
     fileprivate func setupUI() {
                 
-        menuButton.setIcon("\u{f0f5}", title: "Menu", fontSize: 19, textColor: .appColor)
-        
         menus = restaurant.menus?.allObjects as? [Menu]
+        menus = menus.sorted(by: {$0.id < $1.id })
                 
         restaurantView.addShadow()
         
         navBar.backgroundColor = .clear
+        menuButton.setIcon("\u{f0f5}", title: "Menu", fontSize: 19, textColor: .appColor)
         backButton.setIcon("\u{f053}", title: nil, fontSize: 22, textColor: .white)
         shareButton.setIcon("\u{f045}", title: nil, fontSize: 24, textColor: .white)
         infoButton.setIcon("\u{f05a}", title: nil, fontSize: 24, textColor: .white)
@@ -67,19 +72,48 @@ class RestaurantDetailViewController: UIViewController, UITableViewDelegate, UIT
             reviewsCount = String(restaurant.reviews)
         }
         
-        let reviewString = "\(restaurant.ratings) (\(reviewsCount)) | \(restaurant.availableDays!) : \(restaurant.openTime!)"
-        reviewAndTime.setIcon("\u{f006}", title: reviewString, fontSize: 18, textColor: .black)
+        let textMaxWidth = UIScreen.main.bounds.width - 75
+        
+        var restaurantDetailHeight: CGFloat = 135.0
+        
+        //Restaurant name
+        restaurantName.text = restaurant.name
+        restaurantNameHeight.constant = restaurant.name!.height(textMaxWidth, font: UIFont.boldSystemFont(ofSize: 22)) + 5
+        restaurantDetailHeight += restaurantNameHeight.constant
         
         phoneNumber.setIcon("\u{f095}", title: "Reach us at : \(restaurant.phoneNumber)", fontSize: 18, textColor: .black)
         
-        let height = reviewString.height(UIScreen.main.bounds.width - 100, font: UIFont.systemFont(ofSize: 18.0))
-        reviewAndTimeHeight.constant = height + 5 //Extra 5 for spacing
-        restaurantViewHeight.constant = 165.0 + height
-                
-        self.view.layoutIfNeeded()
+        //Restaurant opening time
+        let reviewString = "\(restaurant.ratings) (\(reviewsCount)) | \(restaurant.availableDays!) : \(restaurant.openTime!)"
+        reviewAndTime.setIcon("\u{f006}", title: reviewString, fontSize: 18, textColor: .black)
+        let height = reviewString.height(textMaxWidth, font: UIFont.systemFont(ofSize: 18.0))
+        reviewAndTimeHeight.constant = height + 10 //Extra 10 for spacing
+        restaurantViewHeight.constant = restaurantDetailHeight + height
+        var headerViewHeight = restaurantViewHeight.constant
+            
+        //Header Image
+        if let imageString = restaurant.image, let image = UIImage(named: imageString) {
+            headerImageView.image = image
+            headerImageViewHeight.constant = (image.size.height / (image.size.width/UIScreen.main.bounds.width))
+            headerViewHeight += headerImageViewHeight.constant - 30
+        } else {
+            headerImageView.isHidden = true
+            headerImageViewHeight.constant = 45.0
+            headerViewHeight += 10
+        }
+        
+        customHeaderView.translatesAutoresizingMaskIntoConstraints = false
+
+        let constraints = [
+            customHeaderView.topAnchor.constraint(equalTo: tableView.topAnchor, constant: 0),
+            customHeaderView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0),
+            customHeaderView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0),
+            customHeaderView.heightAnchor.constraint(equalToConstant: headerViewHeight)
+        ]
+        NSLayoutConstraint.activate(constraints)
     }
 
-    fileprivate func updateViewCart() {
+    fileprivate func updateViewCartButton() {
                 
         if let cart = restaurant.cart, let cartSets = cart.cartMenuItems, let cartMenuItems = cartSets.allObjects as? [CartMenuItem] ,cartMenuItems.count > 0 {
          
@@ -145,8 +179,8 @@ class RestaurantDetailViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     //MARK:- UpdateCartDelegate
-    func updateCartView() {
-        self.updateViewCart()
+    func didUpdateSelectIem() {
+        self.updateViewCartButton()
     }
     
     //MARK:- UITableviewCellDataSource
@@ -159,7 +193,7 @@ class RestaurantDetailViewController: UIViewController, UITableViewDelegate, UIT
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RestaurantItemCell") as! RestaurantTableViewCell
         
-        let menuItem = menus[indexPath.section].menuItems!.allObjects as! [MenuItem]
+        let menuItem = (menus[indexPath.section].menuItems!.allObjects as! [MenuItem]).sorted(by: {$0.id < $1.id })
         cell.delegate = self
         cell.setupCell(withMenuItem: menuItem[indexPath.row])
         
@@ -188,7 +222,7 @@ class RestaurantDetailViewController: UIViewController, UITableViewDelegate, UIT
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        let menuItems = menus[indexPath.section].menuItems!.allObjects as! [MenuItem]
+        let menuItems = (menus[indexPath.section].menuItems!.allObjects as! [MenuItem]).sorted(by: {$0.id < $1.id })
         let menuItem = menuItems[indexPath.row]
         
         var height: CGFloat = 90.0

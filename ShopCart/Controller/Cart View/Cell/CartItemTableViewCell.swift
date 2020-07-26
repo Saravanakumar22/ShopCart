@@ -11,6 +11,7 @@ import UIKit
 class CartItemTableViewCell: RestaurantTableViewCell {
 
     @IBOutlet weak var addMessageButton: UIButton!
+    @IBOutlet weak var addComment: UIButton!
     
     fileprivate var cartMenuItem: CartMenuItem!
     
@@ -23,6 +24,7 @@ class CartItemTableViewCell: RestaurantTableViewCell {
 
         self.cartMenuItem = cartMenuItem
         
+        addComment.setIcon("\u{f0e6}", title: nil, fontSize: 28, textColor: .black)
         plusButton.addTarget(self, action: #selector(addItem(sender:)), for: .touchUpInside)
         minusButton.addTarget(self, action: #selector(minusItem(sender:)), for: .touchUpInside)
 

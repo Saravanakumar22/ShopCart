@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 protocol UpdateCartDelegate {
-    func updateCartView()
+    func didUpdateSelectIem()
 }
 
 class RestaurantTableViewCell: UITableViewCell {
@@ -66,10 +66,10 @@ class RestaurantTableViewCell: UITableViewCell {
             count.text = "\(menuItem.cartMenuItem!.quantity)"
         }
         
-        delegate.updateCartView()
+        delegate.didUpdateSelectIem()
     }
     
-    func updateDescLabel(withDesc desc:String?) {
+    fileprivate func updateDescLabel(withDesc desc:String?) {
         
         if desc != nil && desc!.isEmpty == false {
             itemDesc.isHidden = false

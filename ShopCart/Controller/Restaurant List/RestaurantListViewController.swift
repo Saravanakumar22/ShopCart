@@ -25,7 +25,7 @@ class RestaurantListViewController: UIViewController, UITableViewDataSource, UIT
         self.navigationController?.isNavigationBarHidden = false
     }
     
-    func statusbar() {
+    fileprivate func statusbar() {
         
         let tag = 38482
 

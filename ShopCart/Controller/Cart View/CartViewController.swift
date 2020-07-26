@@ -20,7 +20,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupUI()
+        self.setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,12 +70,12 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     //MARK:- UpdateCartDelegate
-    func updateCartView() {
+    func didUpdateSelectIem() {
         self.updateTotalCost()
     }
     
     //MARK:- DeliveryCellDelegate
-    func updateDeliveryOption(option: String) {
+    func didSelectDeliveryOption(option: String) {
         cart.deliveryOption = option
     }
     
